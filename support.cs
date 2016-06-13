@@ -178,7 +178,7 @@ public class WebResult : Computation {
             seen[frame_result] = true;
             target.Write("<table id='{0}' title='{0}'>", frame_result.Id);
             foreach (var attr_name in frame_result.GetAttributeNames()) {
-                target.Write("<tr><td>{0}</td><td>", attr_name);
+                target.Write("<tr class='{1}'><td>{0}</td><td>", attr_name, Stringish.NameForType(frame_result[attr_name].GetType()));
                 HandleResult(frame_result[attr_name]);
                 target.Write("</td></tr>");
             }
