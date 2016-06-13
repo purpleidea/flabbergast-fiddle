@@ -149,6 +149,7 @@ public class WebResult : Computation {
     }
     private readonly TextWriter target;
     private readonly Computation source;
+    private Dictionary<Frame, bool> seen = new Dictionary<Frame, bool>();
 
     public WebResult(WebTaskMaster task_master, Computation source) : base(task_master) {
         this.source = source;
@@ -170,7 +171,12 @@ public class WebResult : Computation {
             target.Write(" }}");
         } else if (result is Frame) {
             var frame_result = (Frame)result;
-            target.Write("<table>");
+            if (seen.ContainsKey(frame_result)) {
+                target.Write("<a href='#{0}'>Frame {0}</a>", frame_result.Id);
+                return;
+            }
+            seen[frame_result] = true;
+            target.Write("<table id='{0}' title='{0}'>", frame_result.Id);
             foreach (var attr_name in frame_result.GetAttributeNames()) {
                 target.Write("<tr><td>{0}</td><td>", attr_name);
                 HandleResult(frame_result[attr_name]);
