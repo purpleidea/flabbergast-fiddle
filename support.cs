@@ -164,11 +164,11 @@ public class WebResult : Computation {
             Success = true;
             target.Write("{0}", HttpUtility.HtmlEncode(result));
         } else if (result is Template) {
-            target.Write("Template {{");
+            target.Write("Template {");
             foreach (var attr in((Template)result).GetAttributeNames()) {
                 target.Write(" {0}" , attr);
             }
-            target.Write(" }}");
+            target.Write(" }");
         } else if (result is Frame) {
             var frame_result = (Frame)result;
             if (seen.ContainsKey(frame_result)) {
