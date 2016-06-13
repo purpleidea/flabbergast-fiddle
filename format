@@ -1,0 +1,4 @@
+#!/bin/sh
+
+set -eu
+astyle --mode=cs -nqpHU $(find $(dirname $0) -name '*.cs' -not -name '*.designer.cs')
