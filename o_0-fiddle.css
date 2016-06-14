@@ -1,0 +1,127 @@
+a {
+outline:0;
+transition:color .5s ease-in-out;
+color:#888;
+}
+
+a:visited,a:link,a:hover,a:active,a:focus {
+text-decoration:none;
+}
+
+a:hover,a:active,a:focus,.show {
+color:#36648B;
+}
+
+table.errors {
+background-color:#F2DEDE;
+border:1px solid #AA4542;
+box-shadow:.1em .1em .3em 0 rgba(0,0,0,0.45);
+}
+
+#output > table {
+margin:.5em;
+}
+
+.output table {
+border:1px solid #fff;
+border-left:1px solid #4F94CD;
+border-radius:.2em;
+margin-left:.2em;
+}
+
+.output {
+border:1px solid #4F94CD;
+box-shadow:.1em .1em .3em 0 rgba(0,0,0,0.45);
+}
+
+.output table:hover {
+border:1px solid #4F94CD;
+transition:border-color .5s ease-in-out;
+}
+
+td {
+padding:.1em;
+}
+.Bool td:first-child:before {
+content:'◑';
+color: #4F94CD;
+}
+
+.Frame td:first-child:before {
+content:'◰';
+color: #4F94CD;
+}
+
+.Int td:first-child:before {
+content:'ℤ';
+color: #4F94CD;
+}
+
+.Null td:first-child:before {
+content:'∅';
+color: #4F94CD;
+}
+
+.Str td:first-child:before {
+content:'A';
+color: #4F94CD;
+}
+
+.Template td:first-child:before {
+content:'⬚';
+color: #4F94CD;
+}
+
+body {
+font-family:sans-serif;
+width:75%;
+margin:0;
+padding:1em 1em 0;
+}
+
+p {
+text-align:justify;
+hyphens:auto;
+}
+
+
+:target {
+border-color:#000;
+transition:border-color 1s ease-in-out;
+}
+
+input[type="submit"] {
+background-color: #4F94CD;
+color:#fff;
+padding:0.5em;
+border: 1px solid #36648B;
+border-radius:.2em;
+}
+
+input[type="submit"]:hover {
+background-color:#36648B;
+}
+
+textarea {
+border:1px solid #4F94CD;
+border-radius:.2em;
+background-color:#eee;
+width:95%;
+height:100%;
+}
+
+#result {
+overflow-x: scroll;
+overflow-y: scroll;
+}
+
+form > table {
+height:100%;
+width:100%;
+}
+
+.title {
+color:#36648B;
+font-weight:bold;
+font-size:120%;
+}
