@@ -34,15 +34,17 @@ public partial class Default : System.Web.UI.Page
             task_master.AddUriHandler(precomp);
             var parser = new Parser("web", script.Text);
             var root_type = parser.ParseFile(task_master, unit, "WebForm" + type_counter);
+            object result = null;
             if (root_type != null) {
                 var computation = (Computation) Activator.CreateInstance(root_type, task_master);
-                var result = new WebResult(task_master, new CompleteResult(task_master, computation));
-                result.Slot();
+                computation.Notify(r => result = r);
+                computation.Slot();
                 task_master.Run();
                 task_master.ReportCircularEvaluation();
+                if (result != null) {
+                    task_master.PrintResult(result);
+                }
             }
-
-
             task_master.Finish();
         } catch (Exception e) {
             output.Text = e.Message;

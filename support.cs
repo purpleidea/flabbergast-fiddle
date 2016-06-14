@@ -12,6 +12,7 @@ public class WebTaskMaster : TaskMaster , Flabbergast.ErrorCollector  {
     private Label target;
     private StringWriter buffer = new StringWriter();
     private Dictionary<SourceReference, bool> seen = new Dictionary<SourceReference, bool>();
+    private Dictionary<Frame, bool> result_seen = new Dictionary<Frame, bool>();
     private bool dirty = false;
 
     internal TextWriter Buffer {
@@ -82,6 +83,7 @@ public class WebTaskMaster : TaskMaster , Flabbergast.ErrorCollector  {
         if (!HasInflightLookups || dirty) {
             return;
         }
+        MakeDirty();
         foreach (var lookup in this) {
             buffer.Write("<tr><td><td>Lookup for “{0}” blocked. Lookup initiated at:<pre>", lookup.Name);
             lookup.SourceReference.Write(buffer, "  ", seen);
@@ -100,7 +102,7 @@ public class WebTaskMaster : TaskMaster , Flabbergast.ErrorCollector  {
     private void MakeDirty() {
         if (!dirty) {
             dirty = true;
-            buffer.Write("<table><tr><th>Location</th><th><th>Error</th></tr>");
+            buffer.Write("<table class='errors'><tr><th>Location</th><th><th>Error</th></tr>");
         }
     }
     public void Finish() {
@@ -109,94 +111,49 @@ public class WebTaskMaster : TaskMaster , Flabbergast.ErrorCollector  {
         }
         target.Text = buffer.ToString();
     }
-
-
-}
-public class CompleteResult : Computation {
-    private readonly Computation source;
-    private long interlock = 1;
-    public CompleteResult(WebTaskMaster task_master, Computation source) : base(task_master) {
-        this.source = source;
-    }
-    private void HandleResult(object result) {
-        if (this.result == null) {
-            this.result = result;
+    public void PrintResult(object result) {
+        if (dirty) {
+            buffer.Write("</table>");
+            dirty = false;
         }
-        if (result is Frame) {
-            var frame_result = (Frame) result;
-            Interlocked.Add(ref interlock, frame_result.Count);
-            foreach (var attr_name in frame_result.GetAttributeNames()) {
-                frame_result.GetOrSubscribe(attr_name, HandleResult);
-            }
-
-        }
-        if (Interlocked.Decrement(ref interlock) == 0) {
-            WakeupListeners();
-        }
-    }
-    protected override bool Run() {
-
-        source.Notify(HandleResult);
-        task_master.Slot(source);
-        return false;
+        buffer.Write("<div class='output'>");
+        PrintResultHelper(result);
+        buffer.Write("</>");
     }
 
-}
-public class WebResult : Computation {
-    public bool Success {
-        get;
-        private set;
-    }
-    private readonly TextWriter target;
-    private readonly Computation source;
-    private Dictionary<Frame, bool> seen = new Dictionary<Frame, bool>();
-
-    public WebResult(WebTaskMaster task_master, Computation source) : base(task_master) {
-        this.source = source;
-        target = task_master.Buffer;
-    }
-
-    private void HandleResult(object result) {
+    private void PrintResultHelper(object result) {
         if (result is bool) {
-            Success = true;
-            target.Write((bool) result ? "True" : "False");
+            buffer.Write((bool) result ? "True" : "False");
         } else if (result is Stringish || result is long || result is double) {
-            Success = true;
-            target.Write("{0}", HttpUtility.HtmlEncode(result));
+            buffer.Write("{0}", HttpUtility.HtmlEncode(result));
         } else if (result is Template) {
-            target.Write("Template {");
+            buffer.Write("Template {");
             foreach (var attr in((Template)result).GetAttributeNames()) {
-                target.Write(" {0}" , attr);
+                buffer.Write(" {0}" , attr);
             }
-            target.Write(" }");
+            buffer.Write(" }");
         } else if (result is Frame) {
             var frame_result = (Frame)result;
-            if (seen.ContainsKey(frame_result)) {
-                target.Write("<a href='#{0}'>Frame {0}</a>", frame_result.Id);
+            if (result_seen.ContainsKey(frame_result)) {
+                buffer.Write("<a href='#{0}'>Frame {0}</a>", frame_result.Id);
                 return;
             }
-            seen[frame_result] = true;
-            target.Write("<table id='{0}' title='{0}'>", frame_result.Id);
+            result_seen[frame_result] = true;
+            buffer.Write("<table id='{0}' title='{0}'>", frame_result.Id);
             foreach (var attr_name in frame_result.GetAttributeNames()) {
-                target.Write("<tr class='{1}'><td>{0}</td><td>", attr_name, Stringish.NameForType(frame_result[attr_name].GetType()));
-                HandleResult(frame_result[attr_name]);
-                target.Write("</td></tr>");
+                buffer.Write("<tr class='{1}' title='{1}'><td>{0}</td><td>", attr_name, Stringish.NameForType(frame_result[attr_name].GetType()));
+                PrintResultHelper(frame_result[attr_name]);
+                buffer.Write("</td></tr>");
             }
 
-            target.Write("</table>");
+            buffer.Write("</table>");
 
         } else if (result is Computation) {
-            target.Write("Unfinished computation");
+            buffer.Write("Unfinished computation");
 
         } else {
-            target.Write("Unknown value of type {0}.", Stringish.NameForType(result.GetType()));
+            buffer.Write("Unknown value of type {0}.", Stringish.NameForType(result.GetType()));
         }
-    }
-
-    protected override bool Run() {
-        source.Notify(HandleResult);
-        task_master.Slot(source);
-        return false;
     }
 }
 }
