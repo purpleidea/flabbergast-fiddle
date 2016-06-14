@@ -139,7 +139,7 @@ public class WebTaskMaster : TaskMaster , Flabbergast.ErrorCollector  {
                 return;
             }
             result_seen[frame_result] = true;
-            buffer.Write("<table id='{0}' title='{0}'>", frame_result.Id);
+            buffer.Write("<p>Frame {0}</p><table id='{0}' title='{0}'>", frame_result.Id);
             foreach (var attr_name in frame_result.GetAttributeNames()) {
                 buffer.Write("<tr class='{1}' title='{1}'><td>{0}</td><td>", attr_name, Stringish.NameForType(frame_result[attr_name].GetType()));
                 PrintResultHelper(frame_result[attr_name]);
