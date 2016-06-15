@@ -42,39 +42,40 @@ transition:border-color .5s ease-in-out;
 td {
 padding:.1em;
 }
+
 .Bool td:first-child:before {
 content:'◑';
-color: #4F94CD;
+color:#4F94CD;
 }
 
 .Comp td:first-child:before {
 content:'⌛';
-color: #4F94CD;
+color:#4F94CD;
 }
 
 .Frame td:first-child:before {
 content:'◰';
-color: #4F94CD;
+color:#4F94CD;
 }
 
 .Int td:first-child:before {
 content:'ℤ';
-color: #4F94CD;
+color:#4F94CD;
 }
 
 .Null td:first-child:before {
 content:'∅';
-color: #4F94CD;
+color:#4F94CD;
 }
 
 .Str td:first-child:before {
 content:'A';
-color: #4F94CD;
+color:#4F94CD;
 }
 
 .Template td:first-child:before {
 content:'⬚';
-color: #4F94CD;
+color:#4F94CD;
 }
 
 body {
@@ -89,21 +90,20 @@ text-align:justify;
 hyphens:auto;
 }
 
-
 :target {
-border-color:#000;
 transition:border-color 1s ease-in-out;
+border-color:#000;
 }
 
-input[type="submit"] {
-background-color: #4F94CD;
+input[type=submit] {
+background-color:#4F94CD;
 color:#fff;
-padding:0.5em;
-border: 1px solid #36648B;
+border:1px solid #36648B;
 border-radius:.2em;
+padding:.5em;
 }
 
-input[type="submit"]:hover {
+input[type=submit]:hover {
 background-color:#36648B;
 }
 
@@ -116,8 +116,8 @@ height:100%;
 }
 
 #result {
-overflow-x: scroll;
-overflow-y: scroll;
+overflow-x:scroll;
+overflow-y:scroll;
 }
 
 form > table {
@@ -127,6 +127,6 @@ width:100%;
 
 .title {
 color:#36648B;
-font-weight:bold;
+font-weight:700;
 font-size:120%;
 }
