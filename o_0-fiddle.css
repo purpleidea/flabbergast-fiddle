@@ -47,6 +47,11 @@ content:'◑';
 color: #4F94CD;
 }
 
+.Comp td:first-child:before {
+content:'⌛';
+color: #4F94CD;
+}
+
 .Frame td:first-child:before {
 content:'◰';
 color: #4F94CD;
