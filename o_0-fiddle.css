@@ -18,6 +18,12 @@ border:1px solid #AA4542;
 box-shadow:.1em .1em .3em 0 rgba(0,0,0,0.45);
 }
 
+#output {
+overflow:auto;
+display:block;
+height:100%;
+}
+
 #output > table {
 margin:.5em;
 }
@@ -115,11 +121,6 @@ width:95%;
 height:100%;
 resize:none;
 overflow:scroll;
-}
-
-#result {
-overflow-x:scroll;
-overflow-y:scroll;
 }
 
 form > table {
