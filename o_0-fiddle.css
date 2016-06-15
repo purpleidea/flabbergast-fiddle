@@ -113,6 +113,8 @@ border-radius:.2em;
 background-color:#eee;
 width:95%;
 height:100%;
+resize:none;
+overflow:scroll;
 }
 
 #result {
@@ -129,4 +131,12 @@ width:100%;
 color:#36648B;
 font-weight:700;
 font-size:120%;
+}
+
+form {
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
 }
