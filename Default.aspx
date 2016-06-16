@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Inherits="Flabbergast.Fiddle.Default" %>
+﻿<%@ Page Language="C#" Inherits="Flabbergast.Fiddle.Default" validateRequest="false" %>
 <!DOCTYPE html>
 <html>
 <head runat="server">
