@@ -35,11 +35,6 @@ border-radius:.2em;
 margin-left:.2em;
 }
 
-.output {
-border:1px solid #4F94CD;
-box-shadow:.1em .1em .3em 0 rgba(0,0,0,0.45);
-}
-
 .output table:hover {
 border:1px solid #4F94CD;
 transition:border-color .5s ease-in-out;
@@ -126,6 +121,7 @@ overflow:scroll;
 form > table {
 height:100%;
 width:100%;
+table-layout:fixed;
 }
 
 .title {
