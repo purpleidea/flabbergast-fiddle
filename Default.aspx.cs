@@ -32,7 +32,7 @@ public partial class Default : System.Web.UI.Page
             task_master.AddUriHandler(BuiltInLibraries.INSTANCE);
             var precomp = new LoadPrecompiledLibraries();
             task_master.AddUriHandler(precomp);
-            var parser = new Parser("web", script.Text);
+            var parser = new Parser("web", script.Text + "\n");
             var root_type = parser.ParseFile(task_master, unit, "WebForm" + type_counter);
             object result = null;
             if (root_type != null) {
