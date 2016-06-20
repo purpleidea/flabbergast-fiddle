@@ -17,6 +17,8 @@ namespace Flabbergast.Fiddle {
 		
 		protected System.Web.UI.WebControls.TextBox script;
 		
+		protected System.Web.UI.WebControls.CheckBox filter_lib;
+		
 		protected System.Web.UI.WebControls.Button run;
 		
 		protected System.Web.UI.WebControls.Label output;

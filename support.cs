@@ -14,15 +14,17 @@ public class WebTaskMaster : TaskMaster , Flabbergast.ErrorCollector  {
     private Dictionary<SourceReference, bool> seen = new Dictionary<SourceReference, bool>();
     private Dictionary<Frame, bool> result_seen = new Dictionary<Frame, bool>();
     private bool dirty = false;
+    private bool filter_lib;
 
     internal TextWriter Buffer {
         get {
             return buffer;
         }
     }
-    public WebTaskMaster(Label target)
+    public WebTaskMaster(Label target, bool filter_lib)
     {
         this.target = target;
+        this.filter_lib = filter_lib;
     }
     public void ReportExpressionTypeError(CodeRegion where, Type new_type, Type existing_type) {
         MakeDirty();
@@ -136,6 +138,10 @@ public class WebTaskMaster : TaskMaster , Flabbergast.ErrorCollector  {
             var frame_result = (Frame)result;
             if (result_seen.ContainsKey(frame_result)) {
                 buffer.Write("<a href='#{0}'>Frame {0}</a>", frame_result.Id);
+                return;
+            }
+            if (filter_lib && frame_result.Container == frame_result && frame_result.SourceReference is BasicSourceReference && ((BasicSourceReference)frame_result.SourceReference).FileName != "web") {
+                buffer.Write("<p>Library {0} (not shown)</p>", ((BasicSourceReference)frame_result.SourceReference).FileName);
                 return;
             }
             result_seen[frame_result] = true;

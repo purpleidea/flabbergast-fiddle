@@ -27,7 +27,7 @@ public partial class Default : System.Web.UI.Page
             }
             Session["type_counter" ] = type_counter + 1;
 
-            var task_master = new WebTaskMaster(output);
+            var task_master = new WebTaskMaster(output, filter_lib.Checked);
             task_master.AddUriHandler(new CurrentInformation(false));
             task_master.AddUriHandler(BuiltInLibraries.INSTANCE);
             var precomp = new LoadPrecompiledLibraries();
