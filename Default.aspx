@@ -33,7 +33,7 @@
 			</tr>
 			<tr><td height="90%" width="50%"><asp:TextBox id="script" runat="server" TextMode="multiline" /></td><td id="result" rowspan="2"><asp:Label id="output" runat="server" /></td></tr>
 			<tr><td><asp:CheckBox id="filter_lib" runat="server" Text="Hide Libraries in Output" Checked="True"/> <asp:Button id="run" runat="server" Text="Do the Thing, Zhu Li!" OnClick="runScript" /></td></tr>
-			<tr style="footer"><td colspan="2"><a href="http://docs.flabbergast.org/">Read the Docs</a> | <a href="https://www.youtube.com/watch?v=ojhTu9aAa_Y">Who is Zhu Li?</a> | <a href="https://github.com/flabbergast-config/flabbergast-fiddle">Where is this code?</a></td></tr>
+			<tr style="footer"><td colspan="2"><a href="http://docs.flabbergast.org/">Read the Docs</a> | <a href="https://www.youtube.com/watch?v=ojhTu9aAa_Y">Who is Zhu Li?</a> | <a href="https://github.com/flabbergast-config/flabbergast-fiddle">Where is this code?</a> | Flabbergast <%=Flabbergast.Configuration.Version%></td></tr>
 		</table>
 	</form>
 </body>
