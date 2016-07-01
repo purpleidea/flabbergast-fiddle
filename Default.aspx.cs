@@ -33,6 +33,7 @@ public partial class Default : System.Web.UI.Page
             var precomp = new LoadPrecompiledLibraries();
             task_master.AddUriHandler(precomp);
             var parser = new Parser("web", script.Text + "\n");
+            parser.DisableExtensions = true;
             var root_type = parser.ParseFile(task_master, unit, "WebForm" + type_counter);
             object result = null;
             if (root_type != null) {
