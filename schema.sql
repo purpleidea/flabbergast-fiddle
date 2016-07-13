@@ -1,1 +1,5 @@
-CREATE TABLE snippets(hash_code INTEGER PRIMARY KEY NOT NULL, content TEXT NOT NULL, last_used DATETIME NOT NULL);
+CREATE TABLE snippets(
+  hash_code INTEGER PRIMARY KEY NOT NULL,
+  content TEXT NOT NULL,
+  last_used DATETIME NOT NULL,
+  hits INTEGER DEFAULT 0);

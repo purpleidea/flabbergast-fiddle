@@ -96,7 +96,7 @@ public partial class Default : System.Web.UI.Page
     }
     private void UpdateSnippet(uint id) {
         var update = Connection.CreateCommand();
-        update.CommandText = "UPDATE snippets SET last_used = ? WHERE hash_code = ?";
+        update.CommandText = "UPDATE snippets SET last_used = ?, hits = hits + 1 WHERE hash_code = ?";
         var usedParam = update.CreateParameter();
         usedParam.Value = DateTime.Now;
         update.Parameters.Add(usedParam);
