@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+
+sqlite3 savedSnippets.sqlite3 <<EOI
+DELETE FROM snippets WHERE hash_code NOT IN (SELECT hash_code FROM snippets WHERE STRFTIME('%s', DATETIME('now', 'localtime')) - STRFTIME('%s', last_used) < 90 * 24 * 3600 ORDER BY last_used DESC LIMIT 50000);
+EOI
