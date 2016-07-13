@@ -22,5 +22,7 @@ namespace Flabbergast.Fiddle {
 		protected System.Web.UI.WebControls.Button run;
 		
 		protected System.Web.UI.WebControls.Label output;
+		
+		protected System.Web.UI.WebControls.HyperLink link;
 	}
 }
