@@ -44,6 +44,11 @@ td {
 padding:.1em;
 }
 
+.Bin td:first-child:before {
+content:'⯑';
+color:#4F94CD;
+}
+
 .Bool td:first-child:before {
 content:'◑';
 color:#4F94CD;
