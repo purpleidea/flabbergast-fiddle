@@ -128,6 +128,8 @@ public class WebTaskMaster : TaskMaster , Flabbergast.ErrorCollector  {
             buffer.Write((bool) result ? "True" : "False");
         } else if (result is Stringish || result is long || result is double) {
             buffer.Write("{0}", HttpUtility.HtmlEncode(result));
+        } else if (result is byte[]) {
+            buffer.Write("{0} bytes of Unspeakable Horror", ((byte[]) result).Length);
         } else if (result is Template) {
             buffer.Write("Template {");
             foreach (var attr in((Template)result).GetAttributeNames()) {

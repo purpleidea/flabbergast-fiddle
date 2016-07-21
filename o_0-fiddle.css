@@ -45,7 +45,7 @@ padding:.1em;
 }
 
 .Bin td:first-child:before {
-content:'⯑';
+content:'�';
 color:#4F94CD;
 }
 
