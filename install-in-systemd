@@ -1,0 +1,19 @@
+#!/bin/sh
+FULL_NAME="$(dirname "$(readlink -e "$0")")"
+
+cat << EOI > "/lib/systemd/system/$(basename "${FULL_NAME}").service"
+[Unit]
+Description=Flabbergast Fiddle Service
+After=network.target
+
+[Service]
+Environment=MONO_IOMAP=all
+EnvironmentFile=
+Type=simple
+ExecStart=/usr/bin/fastcgi-mono-server4 "/applications=/:${FULL_NAME}" /socket=tcp:127.0.0.1:9000 /verbose
+User=www-data
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target
+EOI
