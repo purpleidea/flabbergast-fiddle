@@ -16,13 +16,15 @@ public partial class Default : System.Web.UI.Page
 {
 
     private IDbConnection Connection;
+    private LoadPrecompiledLibraries precomp = new LoadPrecompiledLibraries();
 
     public Default() {
         var str = WebConfigurationManager.ConnectionStrings["savedSnippetsDb"];
         Connection = DbProviderFactories.GetFactory(str.ProviderName).CreateConnection();
         Connection.ConnectionString = str.ConnectionString;
         Connection.Open();
-
+        precomp.Finder = new ResourcePathFinder();
+        precomp.Finder.AddDefault();
     }
     public void runScript(object sender, EventArgs args)
     {
@@ -49,7 +51,6 @@ public partial class Default : System.Web.UI.Page
             var task_master = new WebTaskMaster(output, filter_lib.Checked);
             task_master.AddUriHandler(new CurrentInformation(false));
             task_master.AddUriHandler(BuiltInLibraries.INSTANCE);
-            var precomp = new LoadPrecompiledLibraries();
             task_master.AddUriHandler(precomp);
             var parser = new Parser("web", script.Text + "\n");
             parser.DisableExtensions = true;
