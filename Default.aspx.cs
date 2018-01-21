@@ -75,7 +75,7 @@ public partial class Default : System.Web.UI.Page
     public void Page_Load(object sender, EventArgs args) {
         var savedId = Request.QueryString["saved"];
         uint id;
-        if (savedId != null && uint.TryParse(savedId, out id)) {
+        if (string.IsNullOrEmpty(script.Text) && savedId != null && uint.TryParse(savedId, out id)) {
             var str = GetSnippet(id);
             if (str != null) {
                 UpdateSnippet(id);
