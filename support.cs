@@ -150,18 +150,18 @@ public class WebTaskMaster : TaskMaster , Flabbergast.ErrorCollector  {
             buffer.Write("<p>Frame {0}</p><table id='{0}' title='{0}'>", frame_result.Id);
             foreach (var attr_name in frame_result.GetAttributeNames()) {
                 var type = frame_result[attr_name].GetType();
-                buffer.Write("<tr class='{1}' title='{1}'><td>{0}</td><td>", attr_name, typeof(Computation).IsAssignableFrom(type) ? "Comp" : Stringish.NameForType(type));
+                buffer.Write("<tr class='{1}' title='{1}'><td>{0}</td><td>", attr_name, typeof(Future).IsAssignableFrom(type) ? "Comp" : SupportFunctions.NameForType(type));
                 PrintResultHelper(frame_result[attr_name]);
                 buffer.Write("</td></tr>");
             }
 
             buffer.Write("</table>");
 
-        } else if (result is Computation) {
+        } else if (result is Future) {
             buffer.Write("Unfinished computation");
 
         } else {
-            buffer.Write("Unknown value of type {0}.", Stringish.NameForType(result.GetType()));
+            buffer.Write("Unknown value of type {0}.", SupportFunctions.NameForType(result.GetType()));
         }
     }
 }

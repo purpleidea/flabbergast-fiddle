@@ -57,7 +57,7 @@ public partial class Default : System.Web.UI.Page
             var root_type = parser.ParseFile(task_master, unit, "WebForm" + type_counter);
             object result = null;
             if (root_type != null) {
-                var computation = (Computation) Activator.CreateInstance(root_type, task_master);
+                var computation = (Future) Activator.CreateInstance(root_type, task_master);
                 computation.Notify(r => result = r);
                 computation.Slot();
                 task_master.Run();
