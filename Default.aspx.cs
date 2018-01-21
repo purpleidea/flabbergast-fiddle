@@ -26,6 +26,11 @@ public partial class Default : System.Web.UI.Page
     }
     public void runScript(object sender, EventArgs args)
     {
+        var hash = CreateSnippet(script.Text);
+        var builder = new UriBuilder(HttpContext.Current.Request.Url.AbsoluteUri);
+        builder.Query = String.Format("saved={0}", hash);
+        link.NavigateUrl = builder.Uri.ToString();
+        link.Visible = true;
         try {
             output.Text = "";
             CompilationUnit unit;
@@ -61,14 +66,6 @@ public partial class Default : System.Web.UI.Page
                 }
             }
             task_master.Finish();
-
-            var hash = CreateSnippet(script.Text);
-
-
-            var builder = new UriBuilder(HttpContext.Current.Request.Url.AbsoluteUri);
-            builder.Query = String.Format("saved={0}", hash);
-            link.NavigateUrl = builder.Uri.ToString();
-            link.Visible = true;
         } catch (Exception e) {
             output.Text = e.Message;
             Console.WriteLine(e);
